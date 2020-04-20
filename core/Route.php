@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Container;
+
 class Route
 {
     private $routes;
@@ -48,8 +50,22 @@ class Route
                 $controller = $route[1];
                 $action = $route[2];
                 break;
-            } else {
-                echo 'rota invalida';
+            }
+        }
+
+        if ($found) {
+            $controller = Container::newController($controller);
+            //$controller->$action();
+            switch (count($param)) {
+                case 1:
+                    $controller->$action($param[0]);
+                    break;
+                case 2:
+                    $controller->$action($param[0], $param[1]);
+                    break;
+                case 3:
+                    $controller->$action($param[0], $param[1], $param[2]);
+                    break;
             }
         }
     }
