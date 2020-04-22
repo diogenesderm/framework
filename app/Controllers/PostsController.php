@@ -9,8 +9,10 @@ class PostsController
         echo 'Posts';
     }
 
-    public function show($id)
+    public function show($id, $request)
     {
-        echo 'shwo' . $id;
+        echo 'shwo' . $id . '<br>';
+        echo $request->get->nome. '<br>';
+        echo $request->get->sexo. '<br>';
     }
 }
