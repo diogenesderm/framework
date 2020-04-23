@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
-class PostsController
+use Core\BaseController;
+
+class PostsController extends BaseController
 {
     public function index()
     {
@@ -12,7 +14,7 @@ class PostsController
     public function show($id, $request)
     {
         echo 'shwo' . $id . '<br>';
-        echo $request->get->nome. '<br>';
-        echo $request->get->sexo. '<br>';
+        echo $request->get->nome . '<br>';
+        echo $request->get->sexo . '<br>';
     }
 }

@@ -1,11 +1,17 @@
 <?php
+
 namespace App\Controllers;
 
-class HomeController
+use Core\BaseController;
+
+class HomeController extends BaseController
 {
+
+
     public function index()
     {
-        echo "Home";
-    }
 
+        $this->view->nome = "teste de nome";
+        $this->renderView('home/index');
+    }
 }
