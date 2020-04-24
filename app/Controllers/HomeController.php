@@ -12,6 +12,6 @@ class HomeController extends BaseController
     {
 
         $this->view->nome = "teste de nome";
-        $this->renderView('home/index');
+        $this->renderView('home/index', 'layout');
     }
 }
