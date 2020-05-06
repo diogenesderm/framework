@@ -7,10 +7,12 @@ use PDOException;
 
 class Database
 {
-    public function getDataBase()
+    static function getDataBase()
     {
         $conf = include_once(__DIR__ . '/../app/database.php');
-        if ($conf['drive'] == 'sqlite') {
+        
+        if ($conf['driver'] == 'sqlite') {
+            
             $sqlite = __DIR__ . '/../storage/database/' . $conf['sqlite']['host'];
             $sqlite = 'sqlite:' . $sqlite;
 
@@ -22,7 +24,8 @@ class Database
             } catch (PDOException $ex) {
                 echo $ex->getMessage();
             }
-        } elseif ($conf['drive'] == 'mysql') {
+        } elseif ($conf['driver'] == 'mysql') {
+          
             $host = $conf['mysql']['host'];
             $db = $conf['mysql']['database'];
             $user = $conf['mysql']['user'];

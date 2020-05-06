@@ -5,16 +5,16 @@
  */
 
 return [
-    'driver' => 'sqlite',
+    'driver' => 'mysql',
     'sqlite' => [
         'host' => 'database.db',
     ],
     'mysql' => [
         'host' => 'localhost',
-        'database' => 'curso_microframework',
-        'user' => 'root',
-        'pass' => '123',
+        'database' => 'framework',
+        'user' => 'hibrida',
+        'pass' => 'cli4532hi',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci'
     ]
-]
+];
