@@ -7,7 +7,7 @@ use PDOException;
 
 class Database
 {
-    static function getDataBase()
+    public static function getDataBase()
     {
         $conf = include_once(__DIR__ . '/../app/database.php');
         
