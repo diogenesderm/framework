@@ -76,8 +76,7 @@ abstract class BaseModel
         $values = [];
 
         foreach ($data as $key => $value) {
-
-            $strBinds = "{$strKeysBinds},{$key}=:{$key}";
+            $strKeysBinds = "{$strKeysBinds},{$key}=:{$key}";
             $binds[] = ":{$key}";
             $values[] = $value;
         }
@@ -92,9 +91,20 @@ abstract class BaseModel
         $query = "UPDATE {$this->table} set {$data[0]} WHERE id=:id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue(":id", $id);
-        for ($i = 0; $i < count($data); $i++) {
-            $stmt->bindValue(":{$data[1][$i]}", $data[2][$i]);
+        for ($i = 0; $i < count($data[1]); $i++) {
+            $stmt->bindValue("{$data[1][$i]}", $data[2][$i]);
         }
+        $result = $stmt->execute();
+        $stmt->closeCursor();
+
+        return $result;
+    }
+
+    public function delete($id)
+    {
+        $query = "DELETE FROM  {$this->table} WHERE id=:id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(":id", $id);
         $result = $stmt->execute();
         $stmt->closeCursor();
 

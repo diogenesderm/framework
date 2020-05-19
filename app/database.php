@@ -12,8 +12,8 @@ return [
     'mysql' => [
         'host' => 'localhost',
         'database' => 'framework',
-        'user' => 'root',
-        'pass' => '',
+        'user' => 'hibrida',
+        'pass' => 'cli4532hi',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci'
     ]

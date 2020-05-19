@@ -57,18 +57,28 @@ class PostsController extends BaseController
         $this->renderView('posts/edit', 'layout');
     }
 
-    public function update($id, $request)
+    public function update($id, $teste, $request)
     {
-        
+
         $data = [
             'title' => $request->post->title,
             'content' => $request->post->content,
         ];
 
+
         if ($this->post->update($data, $id)) {
             Redirect::route('/posts');
         } else {
             echo "Erro ao atualizar dados";
+        }
+    }
+
+    public function delete($id)
+    {
+        if ($this->post->delete($id)) {
+            Redirect::route('/posts');
+        } else {
+            echo "Erro ao exlcuir  dados";
         }
     }
 }

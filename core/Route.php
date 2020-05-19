@@ -49,7 +49,7 @@ class Route
 
         foreach ($this->routes as $route) {
             $routeArray = explode('/', $route[0]);
-
+            $param = [];
             for ($i = 0; $i < count($routeArray); $i++) {
                 if ((strpos($routeArray[$i], "{") !== false) && (count($urlArray) == count($routeArray))) {
                     $routeArray[$i] = $urlArray[$i];
@@ -65,19 +65,22 @@ class Route
                 break;
             }
         }
-
+      
         if ($found) {
             $controller = Container::newController($controller);
-           
+            
             switch (count($param)) {
-                case 1:
+                case 0:
                     $controller->$action($param[0], $this->getRequest());
                     break;
-                case 2:
+                case 1:
                     $controller->$action($param[0], $param[1], $this->getRequest());
                     break;
-                case 3:
+                case 2:
                     $controller->$action($param[0], $param[1], $param[2], $this->getRequest());
+                    break;
+                default:
+                    $controller->$action($this->getRequest());
                     break;
             }
         } else {
