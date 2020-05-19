@@ -70,13 +70,13 @@ class Route
             $controller = Container::newController($controller);
            
             switch (count($param)) {
-                case 0:
+                case 1:
                     $controller->$action($param[0], $this->getRequest());
                     break;
-                case 1:
+                case 2:
                     $controller->$action($param[0], $param[1], $this->getRequest());
                     break;
-                case 2:
+                case 3:
                     $controller->$action($param[0], $param[1], $param[2], $this->getRequest());
                     break;
             }
