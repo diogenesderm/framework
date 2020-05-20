@@ -6,6 +6,7 @@ use App\Models\Post;
 use Core\BaseController;
 use Core\Container;
 use Core\Redirect;
+use Core\Session;
 
 class PostsController extends BaseController
 {
@@ -18,6 +19,10 @@ class PostsController extends BaseController
     }
     public function index()
     {
+        if (Session::get('message')) {
+            $this->view->message = Session::get('message');
+            Session::destroy('message');
+        }
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->all();
         $this->renderView('posts/index', 'layout');
@@ -44,9 +49,9 @@ class PostsController extends BaseController
         ];
 
         if ($this->post->create($data)) {
-            Redirect::route('/posts');
+            Redirect::route('/posts', ['message' => 'Posts inserido com sucesso']);
         } else {
-            echo "Erro ao Inserir dados";
+            Redirect::route('/posts', ['message' => 'Erro ao inserir']);
         }
     }
 
@@ -67,18 +72,18 @@ class PostsController extends BaseController
 
 
         if ($this->post->update($data, $id)) {
-            Redirect::route('/posts');
+            Redirect::route('/posts', ['message' => 'Posts atualizado com sucesso']);
         } else {
-            echo "Erro ao atualizar dados";
+            Redirect::route('/posts', ['message' => 'Erro ao atualizar']);
         }
     }
 
     public function delete($id)
     {
         if ($this->post->delete($id)) {
-            Redirect::route('/posts');
+            Redirect::route('/posts', ['message' => 'Posts deletado  com sucesso']);
         } else {
-            echo "Erro ao exlcuir  dados";
+            Redirect::route('/posts', ['message' => 'Erro ao deletar']);
         }
     }
 }

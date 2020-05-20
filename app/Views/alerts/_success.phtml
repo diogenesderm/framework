@@ -1,0 +1,8 @@
+<?php if ($this->view->message) : ?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button class="close" type="button" data-dismiss="alert" aria-label="Cloes">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p> <i class="fa fa-check"></i><?php echo $this->view->message ?></p>
+    </div>
+<?php endif; ?>

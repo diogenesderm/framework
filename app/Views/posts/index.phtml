@@ -4,7 +4,7 @@
             <a class="btn btn-primary pull-right" href="/posts/create"><i></i>Novo post</a>
         </h1>
     </div>
-
+    <?php $this->renderView('alerts/_success'); ?>
     <?php foreach ($this->view->posts as $post) : ?>
         <div class="row">
             <h3 class="h3"><a href="/posts/<?php echo $post->id; ?>/show"><?php echo $post->title; ?></a></h3>

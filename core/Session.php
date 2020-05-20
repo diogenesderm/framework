@@ -1,4 +1,5 @@
 <?php
+
 namespace Core;
 
 class Session
@@ -18,8 +19,8 @@ class Session
 
     public static function destroy($keys)
     {
-        if(is_array($keys)){
-            foreach($keys as $key){
+        if (is_array($keys)) {
+            foreach ($keys as $key) {
                 unset($_SESSION[$key]);
             }
         }
