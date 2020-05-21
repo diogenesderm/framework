@@ -1,15 +1,17 @@
 <div class="container">
     <h1 class="h1"><?php echo $this->getPageTitle(); ?></h1>
-
+  
     <form action="/posts/<?php echo $this->view->post->id; ?>/update" method="POST" accept-charset="utf-8">
-        <div class="form-group">
-            <label for="title">Titulo</label>
-            <input type="text" name="title" class="form-control" value="<?php echo $this->view->post->title; ?>">
+        <div class="form-group ">
+            <label class="control-label " for="title">Titulo</label>
+            <input type="text" name="title" class="form-control <?php echo isset($this->view->message['title']) ? 'is-invalid' : '';?> " value="<?php echo isset( $this->view->inputs->title) ? $this->view->inputs->title :  $this->view->post->title; ?>">
+            <?php if($this->view->message['title']);?><div class="invalid-feedback"><?php echo $this->view->message['title'];?></div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group ">
             <label for="title">Conteudo</label>
-            <textarea class="form-control" name="content" id="content" cols="30" rows="10"><?php echo $this->view->post->content; ?></textarea>
+            <textarea class="form-control <?php echo isset($this->view->message['content']) ? 'is-invalid' : '';?> " name="content" id="content" cols="30" rows="10"><?php echo isset( $this->view->inputs->content) ? $this->view->inputs->content :  $this->view->post->content; ?></textarea>
+            <?php if($this->view->message['content']);?><div class="invalid-feedback"><?php echo $this->view->message['content'];?></div>
         </div>
         <a href="/posts" class="btn btn-default">Cancela</a>
         <button type="submit" class="btn btn-primary">Save</button>

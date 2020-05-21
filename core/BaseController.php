@@ -51,9 +51,9 @@ abstract class BaseController
     protected function getPageTitle($separator = null)
     {
         if ($separator) {
-            echo $this->pageTitle . " " . $separator . " ";
+            return $this->pageTitle . " " . $separator . " ";
         } else {
-            echo $this->pageTitle;
+            return $this->pageTitle;
         }
     }
 }

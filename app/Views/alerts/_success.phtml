@@ -3,6 +3,12 @@
         <button class="close" type="button" data-dismiss="alert" aria-label="Cloes">
             <span aria-hidden="true">&times;</span>
         </button>
-        <p> <i class="fa fa-check"></i><?php echo $this->view->message ?></p>
+        <?php if (is_array($this->view->message)) {
+            foreach ($this->view->message as $message) { ?>
+                <p> <i class="fa fa-check"></i><?php echo $message; ?></p>
+            <?php  } ?>
+        <?php } else {  ?>
+            <p> <i class="fa fa-check"></i><?php echo $this->view->message ?></p>
+        <?php } ?>
     </div>
 <?php endif; ?>

@@ -7,6 +7,7 @@ use Core\BaseController;
 use Core\Container;
 use Core\Redirect;
 use Core\Session;
+use Core\Validator;
 
 class PostsController extends BaseController
 {
@@ -25,14 +26,14 @@ class PostsController extends BaseController
         }
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->all();
-        $this->renderView('posts/index', 'layout');
+        return $this->renderView('posts/index', 'layout');
     }
 
     public function show($id)
     {
         $this->view->post = $this->post->find($id);
         $this->setPageTitle($this->view->post->title);
-        $this->renderView('posts/show', 'layout');
+        return $this->renderView('posts/show', 'layout');
     }
 
     public function create()
@@ -57,9 +58,19 @@ class PostsController extends BaseController
 
     public function edit($id)
     {
+        if (Session::get('message')) {
+            $this->view->message = Session::get('message');
+            Session::destroy('message');
+        }
+
+        if (Session::get('inputs')) {
+            $this->view->inputs = Session::get('inputs');
+            Session::destroy('inputs');
+        }
+
         $this->view->post = $this->post->find($id);
         $this->setPageTitle("Editar post - " . $this->view->post->title);
-        $this->renderView('posts/edit', 'layout');
+        return  $this->renderView('posts/edit', 'layout');
     }
 
     public function update($id, $teste, $request)
@@ -69,7 +80,13 @@ class PostsController extends BaseController
             'title' => $request->post->title,
             'content' => $request->post->content,
         ];
+        
 
+        $validator = Validator::make($data, $this->post->rules());
+
+        if ($validator) {
+            return Redirect::route("/posts/{$id}/edit");
+        }
 
         if ($this->post->update($data, $id)) {
             Redirect::route('/posts', ['message' => 'Posts atualizado com sucesso']);
