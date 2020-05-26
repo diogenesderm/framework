@@ -11,8 +11,8 @@ class Post extends BaseModel
     public function rules()
     {
         return  [
-            'title' => 'required',
-            'content' => 'min:30'
+            'title' => 'required|email',
+            'content' => 'max:30'
         ];
     }
 }
