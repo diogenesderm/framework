@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\Post;
 use Core\BaseController;
-use Core\Container;
 use Core\Redirect;
 use Core\Validator;
 
@@ -15,11 +14,11 @@ class PostsController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->post = Container::getModel("Post");
+        $this->post = new Post();
     }
     public function index()
     {
-       
+
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->all();
         return $this->renderView('posts/index', 'layout');
@@ -45,11 +44,23 @@ class PostsController extends BaseController
             'content' => $request->post->content,
         ];
 
-        if ($this->post->create($data)) {
-            Redirect::route('/posts', ['message' => 'Posts inserido com sucesso']);
-        } else {
-            Redirect::route('/posts', ['message' => 'Erro ao inserir']);
+        try {
+            $this->post->create($data);
+           
+            return Redirect::route("/posts", [
+                'message' => 'Post criado com successo',
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::route("/posts/{$id}/edit", [
+                'message' => $e->getMessage(),
+            ]);
         }
+
+        //if ($this->post->create($data)) {
+        //    Redirect::route('/posts', ['message' => 'Posts inserido com sucesso']);
+        //} else {
+        //    Redirect::route('/posts', ['message' => 'Erro ao inserir']);
+        //}
     }
 
     public function edit($id)
@@ -70,20 +81,43 @@ class PostsController extends BaseController
         if (Validator::make($data, $this->post->rules())) {
             return Redirect::route("/posts/{$id}/edit");
         }
-
-        if ($this->post->update($data, $id)) {
-            Redirect::route('/posts', ['message' => 'Posts atualizado com sucesso']);
-        } else {
-            Redirect::route('/posts', ['message' => 'Erro ao atualizar']);
+        try {
+            $this->post->find($id)->update($data);
+           
+            return Redirect::route("/posts", [
+                'message' => 'Post atualizado com successo',
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::route("/posts/{$id}/edit", [
+                'message' => $e->getMessage(),
+            ]);
         }
+
+        // if ($this->post->update($data, $id)) {
+        //    Redirect::route('/posts', ['message' => 'Posts atualizado com sucesso']);
+        // } else {
+        //     Redirect::route('/posts', ['message' => 'Erro ao atualizar']);
+        // }
     }
 
     public function delete($id)
     {
-        if ($this->post->delete($id)) {
-            Redirect::route('/posts', ['message' => 'Posts deletado  com sucesso']);
-        } else {
-            Redirect::route('/posts', ['message' => 'Erro ao deletar']);
+
+        try {
+            $this->post->find($id)->delete();
+            return Redirect::route("/posts", [
+                'message' => 'Post deletado com successo',
+            ]);
+        } catch (\Exception $e) {
+            return Redirect::route("/posts/{$id}/edit", [
+                'message' => $e->getMessage(),
+            ]);
         }
+
+        // if ($this->post->delete($id)) {
+        //     Redirect::route('/posts', ['message' => 'Posts deletado  com sucesso']);
+        //} else {
+        //     Redirect::route('/posts', ['message' => 'Erro ao deletar']);
+        // }
     }
 }
