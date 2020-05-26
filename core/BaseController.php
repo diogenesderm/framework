@@ -7,11 +7,23 @@ abstract class BaseController
     protected $view;
     private $viewPath;
     private $layoutPath;
+    protected $message;
+    protected $inputs;
     private $pageTitle = null;
 
     public function __construct()
     {
         $this->view = new \stdClass;
+
+        if (Session::get('message')) {
+            $this->message = Session::get('message');
+            Session::destroy('message');
+        }
+
+        if (Session::get('inputs')) {
+            $this->inputs = Session::get('inputs');
+            Session::destroy('inputs');
+        }
     }
 
     protected function renderView($viewPath, $layoutPath = null)

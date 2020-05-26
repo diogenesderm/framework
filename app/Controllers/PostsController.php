@@ -6,7 +6,6 @@ use App\Models\Post;
 use Core\BaseController;
 use Core\Container;
 use Core\Redirect;
-use Core\Session;
 use Core\Validator;
 
 class PostsController extends BaseController
@@ -20,10 +19,7 @@ class PostsController extends BaseController
     }
     public function index()
     {
-        if (Session::get('message')) {
-            $this->view->message = Session::get('message');
-            Session::destroy('message');
-        }
+       
         $this->setPageTitle('Posts');
         $this->view->posts = $this->post->all();
         return $this->renderView('posts/index', 'layout');
@@ -58,19 +54,9 @@ class PostsController extends BaseController
 
     public function edit($id)
     {
-        if (Session::get('message')) {
-            $this->view->message = Session::get('message');
-            Session::destroy('message');
-        }
-
-        if (Session::get('inputs')) {
-            $this->view->inputs = Session::get('inputs');
-            Session::destroy('inputs');
-        }
-
         $this->view->post = $this->post->find($id);
         $this->setPageTitle("Editar post - " . $this->view->post->title);
-        return  $this->renderView('posts/edit', 'layout');
+        return $this->renderView('posts/edit', 'layout');
     }
 
     public function update($id, $teste, $request)
@@ -80,11 +66,8 @@ class PostsController extends BaseController
             'title' => $request->post->title,
             'content' => $request->post->content,
         ];
-        
 
-        $validator = Validator::make($data, $this->post->rules());
-
-        if ($validator) {
+        if (Validator::make($data, $this->post->rules())) {
             return Redirect::route("/posts/{$id}/edit");
         }
 

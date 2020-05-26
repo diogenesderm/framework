@@ -4,14 +4,14 @@
     <form action="/posts/<?php echo $this->view->post->id; ?>/update" method="POST" accept-charset="utf-8">
         <div class="form-group ">
             <label class="control-label " for="title">Titulo</label>
-            <input type="text" name="title" class="form-control <?php echo isset($this->view->message['title']) ? 'is-invalid' : '';?> " value="<?php echo isset( $this->view->inputs->title) ? $this->view->inputs->title :  $this->view->post->title; ?>">
-            <?php if($this->view->message['title']);?><div class="invalid-feedback"><?php echo $this->view->message['title'];?></div>
+            <input type="text" name="title" class="form-control <?php echo isset($this->message['title']) ? 'is-invalid' : '';?> " value="<?php echo isset( $this->inputs->title) ? $this->inputs->title :  $this->view->post->title; ?>">
+            <?php if($this->message['title']);?><div class="invalid-feedback"><?php echo $this->message['title'];?></div>
         </div>
 
         <div class="form-group ">
             <label for="title">Conteudo</label>
-            <textarea class="form-control <?php echo isset($this->view->message['content']) ? 'is-invalid' : '';?> " name="content" id="content" cols="30" rows="10"><?php echo isset( $this->view->inputs->content) ? $this->view->inputs->content :  $this->view->post->content; ?></textarea>
-            <?php if($this->view->message['content']);?><div class="invalid-feedback"><?php echo $this->view->message['content'];?></div>
+            <textarea class="form-control <?php echo isset($this->message['content']) ? 'is-invalid' : '';?> " name="content" id="content" cols="30" rows="10"><?php echo isset( $this->inputs->content) ? $this->inputs->content :  $this->view->post->content; ?></textarea>
+            <?php if($this->message['content']);?><div class="invalid-feedback"><?php echo $this->message['content'];?></div>
         </div>
         <a href="/posts" class="btn btn-default">Cancela</a>
         <button type="submit" class="btn btn-primary">Save</button>
