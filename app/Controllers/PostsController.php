@@ -82,9 +82,7 @@ class PostsController extends BaseController
         ];
         
 
-        $validator = Validator::make($data, $this->post->rules());
-
-        if ($validator) {
+        if (Validator::make($data, $this->post->rules())) {
             return Redirect::route("/posts/{$id}/edit");
         }
 
