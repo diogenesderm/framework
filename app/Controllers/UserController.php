@@ -30,7 +30,7 @@ class UserController extends BaseController
             'password' => $request->post->password,
         ];
 
-        if (Validator::make($data, $this->user->rules())) {
+        if (Validator::make($data, $this->user->rulesCreate())) {
             return Redirect::route('/user/create');
         }
         $data['password'] = password_hash($request->post->password, PASSWORD_BCRYPT);

@@ -13,7 +13,7 @@ class Validator
                     $itemsValues = [];
                     if (strpos($value, "|")) {
                         $itemsValues = explode("|", $value);
-                        foreach ($itemsValues as $itemValue):
+                        foreach ($itemsValues as $itemValue) :
                             $subItem = [];
                             if (strpos($itemValue, ":")) {
                                 $subItem = explode(":", $itemValue);
@@ -28,8 +28,21 @@ class Validator
                                             $erros["$key"] = "O campo {$key} deve ter um maxiimo de {$subItem[1]} caracteres";
                                         }
                                         break;
+                                    case 'unique':
+                                       
+                                        $objModel = "\\App\\Models\\" . $subItem[1];
+                                        $model = new $objModel();
+                                        $find = $model->where($subItem[2], $dataValue)->first();
+                                        if ($find->$subItem[2]) {
+                                            if ($find->$subItem[3] && $find->id == $find->$subItem[3]) {
+                                                break;
+                                            } else {
+                                                $erros["$key"] = "O campo {$key} já existe!";
+                                                break;
+                                            }
+                                        }
+                                        break;
                                 }
-
                             } else {
                                 switch ($itemValue) {
                                     case 'required':
@@ -41,6 +54,20 @@ class Validator
                                     case 'email':
                                         if (!filter_var($dataValue, FILTER_VALIDATE_EMAIL)) {
                                             $erros[$key] = "O campo {$key}  não é um email valido";
+                                        }
+                                        break;
+                                    case 'unique':
+                                        
+                                        $objModel = "\\App\\Models\\" . $subItem[1];
+                                        $model = new $objModel;
+                                        $find = $model->where($subItem[1], $dataValue)->first();
+                                        if ($find->$subItem[2]) {
+                                            if ($find->$subItem[3] && $find->id == $find->$subItem[3]) {
+                                                break;
+                                            } else {
+                                                $erros["$key"] = "O campo {$key} já existe!";
+                                                break;
+                                            }
                                         }
                                         break;
 
@@ -63,7 +90,6 @@ class Validator
                                 }
                                 break;
                         }
-
                     } else {
                         switch ($value) {
                             case 'required':

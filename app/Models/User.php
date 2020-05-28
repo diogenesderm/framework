@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    public $table = 'users';
+    //public $table = 'users';
 
     public $timestamps = false;
 
@@ -16,9 +16,21 @@ class User extends Model
         'password',
     ];
 
-    public function rules()
+    public function rulesCreate()
     {
-        return array();
+        return [
+            'name' => 'min:4|max:255',
+            'email' => 'email|unique:User:email',
+            'password' => 'min:6',
+        ];
     }
 
+    public function rulesUpdate($id)
+    {
+        return [
+            'name' => 'min:4|max:255',
+            'email' => 'email|unique:User:email:' . $id,
+            'password' => 'min:6|max:6',
+        ];
+    }
 }
