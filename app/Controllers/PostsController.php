@@ -43,7 +43,9 @@ class PostsController extends BaseController
             'title' => $request->post->title,
             'content' => $request->post->content,
         ];
-
+        if (Validator::make($data, $this->post->rules())) {
+            return Redirect::route('/posts/create');
+        }
         try {
             $this->post->create($data);
            

@@ -13,7 +13,7 @@ class Validator
                     $itemsValues = [];
                     if (strpos($value, "|")) {
                         $itemsValues = explode("|", $value);
-                        foreach ($itemsValues as $itemValue) :
+                        foreach ($itemsValues as $itemValue):
                             $subItem = [];
                             if (strpos($itemValue, ":")) {
                                 $subItem = explode(":", $itemValue);
@@ -29,7 +29,7 @@ class Validator
                                         }
                                         break;
                                     case 'unique':
-                                       
+
                                         $objModel = "\\App\\Models\\" . $subItem[1];
                                         $model = new $objModel();
                                         $find = $model->where($subItem[2], $dataValue)->first();
@@ -57,12 +57,11 @@ class Validator
                                         }
                                         break;
                                     case 'unique':
-                                        
                                         $objModel = "\\App\\Models\\" . $subItem[1];
                                         $model = new $objModel;
                                         $find = $model->where($subItem[1], $dataValue)->first();
                                         if ($find->$subItem[2]) {
-                                            if ($find->$subItem[3] && $find->id == $find->$subItem[3]) {
+                                            if (isset($subItem[3]) && $find->id == $find->$subItem[3]) {
                                                 break;
                                             } else {
                                                 $erros["$key"] = "O campo {$key} já existe!";
@@ -103,7 +102,19 @@ class Validator
                                     $erros[$key] = "O campo {$key}  não é um email valido";
                                 }
                                 break;
-
+                                case 'unique':
+                                    $objModel = "\\App\\Models\\" . $subItem[1];
+                                    $model = new $objModel;
+                                    $find = $model->where($subItem[1], $dataValue)->first();
+                                    if ($find->$subItem[2]) {
+                                        if (isset($subItem[3]) && $find->id == $find->$subItem[3]) {
+                                            break;
+                                        } else {
+                                            $erros["$key"] = "O campo {$key} já existe!";
+                                            break;
+                                        }
+                                    }
+                                    break;
                             default:
                                 break;
                         }

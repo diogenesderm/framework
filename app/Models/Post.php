@@ -18,7 +18,7 @@ class Post extends Model
     public function rules()
     {
         return  [
-            'title' => 'required|email',
+            'title' => 'required',
             'content' => 'max:30'
         ];
     }
