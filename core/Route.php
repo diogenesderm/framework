@@ -31,6 +31,7 @@ class Route
 
     private function getRequest()
     {
+        
         $obj = new \stdClass();
         foreach ($_GET as $key => $value) {
             $obj->get->$key = $value;
@@ -40,6 +41,7 @@ class Route
             $obj->post->$key = $value;
         }
 
+        
         return $obj;
     }
     private function run()
@@ -70,6 +72,7 @@ class Route
             $controller = Container::newController($controller);
             
             switch (count($param)) {
+                
                 case 0:
                     $controller->$action($param[0], $this->getRequest());
                     break;

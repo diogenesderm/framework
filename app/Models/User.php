@@ -11,7 +11,7 @@ class User extends Model
     public $timestamps = false;
 
     public $fillable = [
-        'nome',
+        'name',
         'email',
         'password',
     ];

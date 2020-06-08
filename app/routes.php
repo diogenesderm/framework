@@ -11,4 +11,8 @@ $routes[] = ['/posts/{id}/delete', 'PostsController@delete'];
 $routes[] = ['/user/create', 'UserController@create'];
 $routes[] = ['/user/store', 'UserController@store'];
 
+$routes[] = ['/login', 'UserController@login'];
+$routes[] = ['/login/auth', 'UserController@auth'];
+
+
 return $routes;

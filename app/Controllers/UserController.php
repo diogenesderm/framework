@@ -6,9 +6,11 @@ use Core\BaseController;
 use Core\Validator;
 use App\Models\User;
 use Core\Redirect;
+use Core\Authenticate;
 
 class UserController extends BaseController
 {
+    use Authenticate;
     private $user;
 
     public function __construct()
@@ -22,13 +24,15 @@ class UserController extends BaseController
         return $this->renderView('user/create', 'layout');
     }
 
-    public function store($request)
+    public function store($id, $request)
     {
+
         $data = [
             'name' => $request->post->name,
             'email' => $request->post->email,
             'password' => $request->post->password,
         ];
+
 
         if (Validator::make($data, $this->user->rulesCreate())) {
             return Redirect::route('/user/create');
@@ -46,5 +50,9 @@ class UserController extends BaseController
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function login()
+    {
     }
 }
