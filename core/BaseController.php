@@ -10,10 +10,12 @@ abstract class BaseController
     protected $message;
     protected $inputs;
     private $pageTitle = null;
+    protected $auth;
 
     public function __construct()
     {
         $this->view = new \stdClass;
+        $this->auth = new Auth();
 
         if (Session::get('message')) {
             $this->message = Session::get('message');

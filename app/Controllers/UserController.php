@@ -11,10 +11,12 @@ use Core\Authenticate;
 class UserController extends BaseController
 {
     use Authenticate;
+
     private $user;
 
     public function __construct()
     {
+    
         parent::__construct();
         $this->user = new User();
     }
@@ -52,7 +54,4 @@ class UserController extends BaseController
         }
     }
 
-    public function login()
-    {
-    }
 }

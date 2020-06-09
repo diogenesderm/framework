@@ -13,5 +13,24 @@
         <a class="nav-link" href="/posts">Posts</a>
       </li>
     </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <?php if ($this->auth->check()) : ?>
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->auth->name(); ?></span></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </li>
+
+       
+      <?php else :  ?>
+        <li class="nav-item ">
+          <a class="nav-link " href="/login">Login</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="/user/create">Register</a>
+        </li>
+      <?php endif; ?>
+    </ul>
   </div>
 </nav>

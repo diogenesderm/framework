@@ -12,6 +12,7 @@ $routes[] = ['/user/create', 'UserController@create'];
 $routes[] = ['/user/store', 'UserController@store'];
 
 $routes[] = ['/login', 'UserController@login'];
+$routes[] = ['/logout', 'UserController@logout'];
 $routes[] = ['/login/auth', 'UserController@auth'];
 
 
