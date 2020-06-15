@@ -9,9 +9,12 @@
         <div class="row">
             <h3 class="h3"><a href="/posts/<?php echo $post->id; ?>/show"><?php echo $post->title; ?></a></h3>
             <p class="text-justify"><?php echo $post->content ?></p>
-            <p class="text-right">
-                <a href="/posts/<?php echo $post->id; ?>/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                <a onclick="return confirm('Deletar este post?')" href="/posts/<?php echo $post->id; ?>/delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+            <p>
+            <strong>Author: <?php echo $post->user->name;?></strong><br>
+                <span class="pull-right">
+                    <a href="/posts/<?php echo $post->id; ?>/edit" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <a onclick="return confirm('Deletar este post?')" href="/posts/<?php echo $post->id; ?>/delete" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </span>
             </p>
         </div>
         <hr>

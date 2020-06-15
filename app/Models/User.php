@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+use Illuminate\Database\Eloquent\Model;
+use Core\BaseModelEloquent;
+
+class User extends BaseModelEloquent
 {
     //public $table = 'users';
 
@@ -32,5 +34,10 @@ class User extends Model
             'email' => 'email|unique:User:email:' . $id,
             'password' => 'min:6|max:6',
         ];
+    }
+
+    public function post()
+    {
+        return $this->hasMany(Post::class);
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Core\BaseModelEloquent;
 use Core\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Post extends BaseModelEloquent
 {
     public $table = 'posts';
     public $timestamps = false;
@@ -21,5 +22,10 @@ class Post extends Model
             'title' => 'required',
             'content' => 'max:30'
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

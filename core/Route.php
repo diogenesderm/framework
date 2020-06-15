@@ -18,7 +18,12 @@ class Route
     {
         foreach ($routes as $route) {
             $explode = explode('@', $route[1]);
-            $r = [$route[0], $explode[0], $explode[1]];
+            if ($route[2]) {
+                $r = [$route[0], $explode[0], $explode[1], $route[2]];
+            } else {
+                $r = [$route[0], $explode[0], $explode[1]];
+            }
+
             $newRoutes[] = $r;
         }
         $this->routes = $newRoutes;
@@ -31,7 +36,7 @@ class Route
 
     private function getRequest()
     {
-        
+
         $obj = new \stdClass();
         foreach ($_GET as $key => $value) {
             $obj->get->$key = $value;
@@ -41,7 +46,7 @@ class Route
             $obj->post->$key = $value;
         }
 
-        
+
         return $obj;
     }
     private function run()
@@ -64,15 +69,19 @@ class Route
                 $found = true;
                 $controller = $route[1];
                 $action = $route[2];
+                $auth = new Auth();
+                if ($route[3] && !$auth->check()) {
+                    $action = 'forbiden';
+                }
                 break;
             }
         }
-      
+
         if ($found) {
             $controller = Container::newController($controller);
-            
+
             switch (count($param)) {
-                
+
                 case 0:
                     $controller->$action($param[0], $this->getRequest());
                     break;
